@@ -53,26 +53,18 @@ def create_app(test_config=None):
     @app.route('/api/auth/register', methods=['POST'])
     def register():
         data = request.get_json()
-        username = data.get('username')
         password = data.get('password')
         email = data.get('email')
         full_name = data.get('full_name')
 
-        app.logger.info(f"Registration attempt: username={username}, email={email}, full_name={full_name}")
+        app.logger.info(f"Registration attempt: email={email}, full_name={full_name}")
 
-        if not username or not password or not email or not full_name:
+        if not password or not email or not full_name:
             app.logger.warning("Registration failed: Missing required fields")
             return jsonify({'message': 'All fields are required'}), 400
 
         db = SessionLocal()
         try:
-            app.logger.info("Checking for existing username")
-            # Check if username exists
-            existing_user = db.query(User).filter(User.username == username).first()
-            if existing_user:
-                app.logger.warning(f"Registration failed: Username {username} already exists")
-                return jsonify({'message': 'Username already exists'}), 409
-
             app.logger.info("Checking for existing email")
             # Check if email exists
             existing_email = db.query(User).filter(User.email == email).first()
@@ -83,7 +75,7 @@ def create_app(test_config=None):
             app.logger.info("Hashing password and creating user")
             hashed_password = generate_password_hash(password)
             new_user = User(
-                username=username,
+                username=email,  # Use email as username for backward compatibility
                 password=hashed_password,
                 email=email,
                 full_name=full_name
@@ -104,7 +96,7 @@ def create_app(test_config=None):
     @app.route('/api/auth/login', methods=['POST'])
     def login():
         data = request.get_json()
-        email = data.get('username')  # Note: frontend sends as 'username', but it's email now
+        email = data.get('email')
         password = data.get('password')
 
         if not email or not password:
@@ -122,7 +114,7 @@ def create_app(test_config=None):
             # Update last login
             user.last_login = datetime.utcnow()
             db.commit()
-            return jsonify({'message': 'Login successful', 'user': {'id': user.id, 'username': user.username, 'email': user.email, 'full_name': user.full_name, 'last_login': user.last_login.isoformat() if user.last_login else None, 'profile_picture': user.profile_picture}}), 200
+            return jsonify({'message': 'Login successful', 'user': {'id': user.id, 'email': user.email, 'full_name': user.full_name, 'last_login': user.last_login.isoformat() if user.last_login else None, 'profile_picture': user.profile_picture}}), 200
         except Exception as e:
             return jsonify({'message': 'Login failed', 'error': str(e)}), 500
         finally:
@@ -160,7 +152,6 @@ def create_app(test_config=None):
                 return jsonify({'message': 'User not found'}), 404
 
             data = request.form  # Use form for file upload
-            username = data.get('username')
             email = data.get('email')
             full_name = data.get('full_name')
             current_password = data.get('current_password')
@@ -168,8 +159,8 @@ def create_app(test_config=None):
             confirm_password = data.get('confirm_password')
 
             # Validate required fields
-            if not username or not email or not full_name:
-                return jsonify({'message': 'Username, email, and full name are required'}), 400
+            if not email or not full_name:
+                return jsonify({'message': 'Email and full name are required'}), 400
 
             # Check if email is unique
             existing_email = db.query(User).filter(User.email == email, User.id != user_id).first()
@@ -177,7 +168,7 @@ def create_app(test_config=None):
                 return jsonify({'message': 'Email already in use'}), 409
 
             # Update basic fields
-            user.username = username
+            user.username = email  # Keep username synced with email
             user.email = email
             user.full_name = full_name
 

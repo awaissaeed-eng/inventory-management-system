@@ -5,7 +5,7 @@ import { API_URL } from '../config';
 import { FaUser, FaLock, FaEye, FaEyeSlash, FaShieldAlt } from 'react-icons/fa';
 
 const LoginPage = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ const LoginPage = () => {
 
     try {
     const response = await axios.post(`${API_URL}/api/auth/login`, {
-          username,
+          email,
           password
         });
 
@@ -33,7 +33,7 @@ const LoginPage = () => {
       }
     } catch (error) {
       console.error('Login error:', error);
-      alert("Server error or wrong username/password");
+      alert("Server error or wrong email/password");
     } finally {
       setIsLoading(false);
     }
@@ -48,27 +48,7 @@ const LoginPage = () => {
       ></div>
       
       {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-4000"></div>
-      </div>
-
-      {/* Logo Section */}
-      <div className="absolute top-8 left-8 z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-            <img src="nepra_logo.png" alt="NEPRA Logo" className="w-8 h-8 object-contain" />
-          </div>
-          <div className="text-white">
-            <h2 className="text-xl font-bold">NEPRA</h2>
-            <p className="text-sm opacity-80">IT Asset Control</p>
-          </div>
-        </div>
-      </div>
+      <div className="absolute inset-0 bg-black bg-opacity-40"></div>
 
       {/* Main Login Container */}
       <div className="w-full max-w-md z-10">
@@ -90,11 +70,11 @@ const LoginPage = () => {
                   <FaUser className="text-gray-400" />
                 </div>
                 <input
-                  type="text"
+                  type="email"
                   placeholder="Enter your email"
                   required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
                 />
               </div>
@@ -191,13 +171,6 @@ const LoginPage = () => {
           <p>&copy; 2024 NEPRA IT Asset Management System</p>
           <p className="mt-1">All rights reserved</p>
         </div>
-      </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-1/2 right-8 transform -translate-y-1/2 hidden lg:block">
-        <div className="w-64 h-64 border border-white/20 rounded-full"></div>
-        <div className="w-48 h-48 border border-white/20 rounded-full absolute top-8 left-8"></div>
-        <div className="w-32 h-32 border border-white/20 rounded-full absolute top-16 left-16"></div>
       </div>
     </div>
   );

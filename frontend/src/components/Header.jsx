@@ -194,13 +194,13 @@ const Header = ({ toggleSidebar, sidebarOpen }) => {
                 />
               ) : (
                 <span className="text-gray-700 text-sm font-semibold">
-                  {(user?.username || user?.full_name || 'U').charAt(0).toUpperCase()}
+                  {(user?.full_name || 'U').charAt(0).toUpperCase()}
                 </span>
               )}
             </div>
 
             <div className="hidden md:block text-left">
-              <p className="text-sm font-medium text-gray-900">{user?.full_name || user?.username || 'User'}</p>
+              <p className="text-sm font-medium text-gray-900">{user?.full_name || 'User'}</p>
             </div>
 
             <FaChevronDown className={`text-gray-400 text-xs transition-transform duration-200 ${dropdownOpen ? 'rotate-180' : ''}`} />

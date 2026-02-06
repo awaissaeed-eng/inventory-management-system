@@ -6,14 +6,12 @@ import { FaUser, FaEnvelope, FaLock, FaClock, FaCamera, FaSave, FaTimes } from '
 const AdminProfile = () => {
   const [profile, setProfile] = useState({
     id: '',
-    username: '',
     email: '',
     full_name: '',
     last_login: '',
     profile_picture: null
   });
   const [formData, setFormData] = useState({
-    username: '',
     email: '',
     full_name: '',
     current_password: '',
@@ -45,7 +43,6 @@ const AdminProfile = () => {
   const response = await axios.get(`${API_URL}/api/auth/profile/${userId}`);
       setProfile(response.data);
       setFormData({
-        username: response.data.username,
         email: response.data.email,
         full_name: response.data.full_name,
         current_password: '',
@@ -92,7 +89,6 @@ const AdminProfile = () => {
     }
 
     const data = new FormData();
-    data.append('username', formData.username);
     data.append('email', formData.email);
     data.append('full_name', formData.full_name);
     if (formData.current_password) data.append('current_password', formData.current_password);
@@ -200,17 +196,6 @@ const AdminProfile = () => {
                   required
                 />
               </div>
-            </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
-              <input
-                type="text"
-                name="username"
-                value={formData.username}
-                onChange={handleInputChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Email Address</label>

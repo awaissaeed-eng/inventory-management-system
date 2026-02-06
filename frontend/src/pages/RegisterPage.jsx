@@ -7,7 +7,6 @@ import { FaUser, FaLock, FaEye, FaEyeSlash, FaEnvelope, FaUserPlus, FaShieldAlt,
 function RegistrationPage() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -38,7 +37,6 @@ function RegistrationPage() {
 
     try {
   const response = await axios.post(`${API_URL}/api/auth/register`, {
-        username,
         password,
         email,
         full_name: fullName
@@ -70,26 +68,6 @@ function RegistrationPage() {
       
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-
-      {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-0 right-0 w-96 h-96 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-4000"></div>
-      </div>
-
-      {/* Logo Section */}
-      <div className="absolute top-8 left-8 z-10">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-            <img src="logo_NEPRA.png" alt="NEPRA Logo" className="w-8 h-8 object-contain" />
-          </div>
-          <div className="text-white">
-            <h2 className="text-xl font-bold">NEPRA</h2>
-            <p className="text-sm opacity-80">IT Asset Control</p>
-          </div>
-        </div>
-      </div>
 
       {/* Main Registration Container */}
       <div className="w-full max-w-lg z-10">
@@ -131,24 +109,6 @@ function RegistrationPage() {
                   required
                   value={fullName}
                   onChange={(e) => setFullName(e.target.value)}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
-                />
-              </div>
-            </div>
-
-            {/* Username Field */}
-            <div className="space-y-1">
-              <label className="text-sm font-medium text-gray-700 block">Username</label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <FaUser className="text-gray-400" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Choose a username"
-                  required
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white text-gray-900 placeholder-gray-500 transition-all duration-200"
                 />
               </div>
@@ -322,12 +282,6 @@ function RegistrationPage() {
         </div>
       </div>
 
-      {/* Decorative Elements */}
-      <div className="absolute top-1/2 right-8 transform -translate-y-1/2 hidden lg:block">
-        <div className="w-64 h-64 border border-white/20 rounded-full"></div>
-        <div className="w-48 h-48 border border-white/20 rounded-full absolute top-8 left-8"></div>
-        <div className="w-32 h-32 border border-white/20 rounded-full absolute top-16 left-16"></div>
-      </div>
     </div>
   );
 }
