@@ -17,6 +17,15 @@ class User(Base):
     profile_picture = Column(String(255), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+class PasswordResetToken(Base):
+    __tablename__ = 'password_reset_tokens'
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    token = Column(String(100), unique=True, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    expires_at = Column(DateTime, nullable=False)
+    used = Column(Boolean, default=False)
+
 class Asset(Base):
     __tablename__ = 'assets'
     id = Column(Integer, primary_key=True, autoincrement=True)

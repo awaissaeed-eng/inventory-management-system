@@ -121,7 +121,7 @@ const LoginPage = () => {
                 <span className="text-sm text-gray-600">Remember me</span>
               </label>
               <a 
-                href="#" 
+                href="/forgot-password" 
                 className="text-sm text-blue-600 hover:text-blue-500 font-medium transition-colors duration-200"
               >
                 Forgot password?

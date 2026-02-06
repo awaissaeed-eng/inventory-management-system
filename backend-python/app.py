@@ -2,10 +2,16 @@ from flask import Flask, Blueprint, request, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 import os
+from dotenv import load_dotenv
 from flask_cors import CORS
+from flask_mail import Mail, Message
 from werkzeug.security import generate_password_hash, check_password_hash
-from datetime import datetime
-from models import Base, User
+from datetime import datetime, timedelta
+import secrets
+from models import Base, User, PasswordResetToken
+
+# Load environment variables from .env file
+load_dotenv()
 
 def create_app(test_config=None):
     app = Flask(__name__)
@@ -13,8 +19,19 @@ def create_app(test_config=None):
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     CORS(app)
 
+    # Email configuration
+    app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER', 'smtp.gmail.com')
+    app.config['MAIL_PORT'] = int(os.getenv('MAIL_PORT', 587))
+    app.config['MAIL_USE_TLS'] = os.getenv('MAIL_USE_TLS', 'True') == 'True'
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME', '')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD', '')
+    app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_DEFAULT_SENDER', 'noreply@nepra.com')
+    
+    mail = Mail(app)
+
     if test_config:
         app.config.update(test_config)
+
 
     # SQLAlchemy setup
     mysql_uri = os.getenv('MYSQL_URI', 'mysql+mysqlconnector://root:@localhost/inventory_management')
@@ -200,6 +217,181 @@ def create_app(test_config=None):
         except Exception as e:
             db.rollback()
             return jsonify({'message': 'Failed to update profile', 'error': str(e)}), 500
+        finally:
+            db.close()
+
+    # Forgot Password endpoint
+    @app.route('/api/auth/forgot-password', methods=['POST'])
+    def forgot_password():
+        data = request.get_json()
+        email = data.get('email')
+
+        if not email:
+            return jsonify({'message': 'Email is required'}), 400
+
+        db = SessionLocal()
+        try:
+            # Check if user exists
+            user = db.query(User).filter(User.email == email).first()
+            if not user:
+                # Don't reveal if email exists or not for security
+                app.logger.info(f"Password reset requested for non-existent email: {email}")
+                return jsonify({'message': 'If the email exists, a reset link has been sent'}), 200
+
+            # Generate secure token
+            token = secrets.token_urlsafe(32)
+            expires_at = datetime.utcnow() + timedelta(hours=1)
+
+            # Delete any existing unused tokens for this user
+            db.query(PasswordResetToken).filter(
+                PasswordResetToken.user_id == user.id,
+                PasswordResetToken.used == False
+            ).delete()
+
+            # Create new reset token
+            reset_token = PasswordResetToken(
+                user_id=user.id,
+                token=token,
+                expires_at=expires_at
+            )
+            db.add(reset_token)
+            db.commit()
+
+            reset_url = f"http://localhost:3000/reset-password?token={token}"
+            
+            # Check if email is configured
+            email_configured = (
+                app.config.get('MAIL_USERNAME') and 
+                app.config['MAIL_USERNAME'] != 'your-email@gmail.com' and
+                app.config.get('MAIL_PASSWORD') and
+                app.config['MAIL_PASSWORD'] != 'your-app-password-here'
+            )
+
+            if not email_configured:
+                # Development mode - log to console instead of sending email
+                print("\n" + "="*80)
+                print("🔐 PASSWORD RESET REQUEST (Development Mode)")
+                print("="*80)
+                print(f"User: {user.full_name} ({email})")
+                print(f"Reset Link: {reset_url}")
+                print(f"Token expires in: 1 hour")
+                print("="*80)
+                print("\n⚠️  Email not configured! Copy the link above to reset password.")
+                print("To enable email: Configure MAIL_USERNAME and MAIL_PASSWORD in .env file\n")
+                
+                app.logger.warning("Email not configured - reset link logged to console")
+                return jsonify({
+                    'message': 'If the email exists, a reset link has been sent',
+                    'dev_mode': True,
+                    'reset_url': reset_url  # Only in dev mode
+                }), 200
+
+            # Send email
+            try:
+                msg = Message(
+                    subject='Password Reset Request - NEPRA IT Asset Management',
+                    recipients=[email],
+                    sender=app.config['MAIL_DEFAULT_SENDER']
+                )
+                msg.html = f"""
+                <html>
+                    <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                        <div style="max-width: 600px; margin: 0 auto; padding: 20px;">
+                            <h2 style="color: #16a34a;">Password Reset Request</h2>
+                            <p>Hello {user.full_name},</p>
+                            <p>We received a request to reset your password for your NEPRA IT Asset Management account.</p>
+                            <p>Click the button below to reset your password:</p>
+                            <div style="text-align: center; margin: 30px 0;">
+                                <a href="{reset_url}" 
+                                   style="background: linear-gradient(to right, #16a34a, #059669); 
+                                          color: white; 
+                                          padding: 12px 30px; 
+                                          text-decoration: none; 
+                                          border-radius: 8px; 
+                                          display: inline-block;
+                                          font-weight: bold;">
+                                    Reset Password
+                                </a>
+                            </div>
+                            <p>Or copy and paste this link into your browser:</p>
+                            <p style="background: #f3f4f6; padding: 10px; border-radius: 5px; word-break: break-all;">
+                                {reset_url}
+                            </p>
+                            <p style="color: #ef4444; font-weight: bold;">This link will expire in 1 hour.</p>
+                            <p>If you didn't request this password reset, please ignore this email. Your password will remain unchanged.</p>
+                            <hr style="border: none; border-top: 1px solid #e5e7eb; margin: 30px 0;">
+                            <p style="color: #6b7280; font-size: 12px;">
+                                This is an automated email from NEPRA IT Asset Management System. Please do not reply to this email.
+                            </p>
+                        </div>
+                    </body>
+                </html>
+                """
+                mail.send(msg)
+                app.logger.info(f"Password reset email sent successfully to {email}")
+                print(f"✅ Password reset email sent to {email}")
+            except Exception as e:
+                app.logger.error(f"Failed to send email: {str(e)}")
+                print(f"\n❌ Failed to send email to {email}")
+                print(f"Error: {str(e)}")
+                print("Check your email configuration in .env file\n")
+                # Continue anyway - don't reveal email sending failure
+                pass
+
+            return jsonify({'message': 'If the email exists, a reset link has been sent'}), 200
+        except Exception as e:
+            db.rollback()
+            app.logger.error(f"Forgot password error: {str(e)}")
+            return jsonify({'message': 'An error occurred. Please try again later.'}), 500
+        finally:
+            db.close()
+
+    # Reset Password endpoint
+    @app.route('/api/auth/reset-password', methods=['POST'])
+    def reset_password():
+        data = request.get_json()
+        token = data.get('token')
+        new_password = data.get('new_password')
+
+        if not token or not new_password:
+            return jsonify({'message': 'Token and new password are required'}), 400
+
+        if len(new_password) < 6:
+            return jsonify({'message': 'Password must be at least 6 characters long'}), 400
+
+        db = SessionLocal()
+        try:
+            # Find the reset token
+            reset_token = db.query(PasswordResetToken).filter(
+                PasswordResetToken.token == token,
+                PasswordResetToken.used == False
+            ).first()
+
+            if not reset_token:
+                return jsonify({'message': 'Invalid or expired reset token'}), 400
+
+            # Check if token has expired
+            if datetime.utcnow() > reset_token.expires_at:
+                return jsonify({'message': 'Reset token has expired'}), 400
+
+            # Get the user
+            user = db.query(User).filter(User.id == reset_token.user_id).first()
+            if not user:
+                return jsonify({'message': 'User not found'}), 404
+
+            # Update password
+            user.password = generate_password_hash(new_password)
+            
+            # Mark token as used
+            reset_token.used = True
+            
+            db.commit()
+
+            return jsonify({'message': 'Password reset successful'}), 200
+        except Exception as e:
+            db.rollback()
+            app.logger.error(f"Reset password error: {str(e)}")
+            return jsonify({'message': 'Failed to reset password', 'error': str(e)}), 500
         finally:
             db.close()
 
