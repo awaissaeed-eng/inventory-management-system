@@ -10,13 +10,15 @@
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.4-06B6D4?style=flat&logo=tailwind-css&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.8+-3776AB?style=flat&logo=python&logoColor=white)
 
-[Features](#-features) • [Tech Stack](#-tech-stack) • [Screenshots](#-screenshots) • [Installation](#-installation)
-
 </div>
 
 ---
 
-## 🚀 Features
+<div align="center">
+
+**🚀 Features**
+
+</div>
 
 - **Dynamic Navigation** - Smooth client-side routing with React Router and 13+ pages
 - **Event Sections** - Organized asset categories with device types, brands, and models
@@ -25,7 +27,11 @@
 - **Attendee Chat** - Activity logs and audit trail for all operations
 - **Fully Responsive** - Optimized user experience on mobile, tablet, and desktop devices
 
-## 🛠️ Tech Stack
+<div align="center">
+
+**🛠️ Tech Stack**
+
+</div>
 
 - **Frontend**: React, Tailwind CSS
 - **Backend**: Python (Flask), SQLAlchemy
@@ -33,37 +39,45 @@
 - **Styling**: CSS3 (Flexbox, Grid)
 - **Deployment**: Local Server
 
-## 📸 Screenshots
+<div align="center">
 
-### 🏠 Homepage
+**📸 Screenshots**
+
+</div>
+
+**🏠 Homepage**
 
 <img width="1900" height="870" alt="Dashboard" src="https://github.com/user-attachments/assets/50d9a7e3-10f6-4e3d-89e1-e809180e368b" />
 
-### � Asset List
+**📅 Asset List**
 
 <img width="1920" height="1042" alt="Assets" src="https://github.com/user-attachments/assets/c06c3f77-a166-49da-9748-aeb6166f1336" />
 
-### � Assignment Details
+**📋 Assignment Details**
 
 <img width="1920" height="1042" alt="Assets" src="https://github.com/user-attachments/assets/e99b3b5f-eeb4-4b6f-a3da-b71b79935842" />
 
-### 🔧 Repair Management
+**🔧 Repair Management**
 
 <img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/48a86b24-29ad-4316-970b-9d7b5168dffa" />
 
-### 🔄 Return Processing
+**🔄 Return Processing**
 
 <img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/00d47185-ec80-4f62-8d4a-169e60537a44" />
 
-### 🎯 Auction System
+**🎯 Auction System**
 
 <img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/87d2ea1a-ab11-466e-b24b-304523c0d4fa" />
 
-### 📊 Reports
+**📊 Reports**
 
 <img width="1920" height="936" alt="Reports" src="https://github.com/user-attachments/assets/33bd8647-b40e-4092-b76f-892b2f5d2e84" />
 
-## 🎯 Featured Events
+<div align="center">
+
+**🎯 Featured Events**
+
+</div>
 
 - **Asset Management** - Complete CRUD operations with search and filtering
 - **Assignment Tracking** - Employee allocation with voucher management
@@ -72,11 +86,19 @@
 - **Auction Management** - Asset disposal with price and date tracking
 - **Report Generation** - PDF and Excel export with custom filters
 
-## 📱 Mobile View
+<div align="center">
+
+**📱 Mobile View**
+
+</div>
 
 Fully responsive design optimized for all screen sizes with Tailwind CSS utility classes.
 
-## ⚙️ Installation & Setup
+<div align="center">
+
+**⚙️ Installation & Setup**
+
+</div>
 
 ```bash
 # Clone the repository
@@ -94,20 +116,24 @@ pip install -r requirements.txt
 npm run dev
 ```
 
-## � From [http://localhost:3000](http://localhost:3000) to your browser
+<div align="center">
+
+**🔧 From [http://localhost:3000](http://localhost:3000) to your browser**
+
+</div>
 
 ---
 
 <div align="center">
 
-### 👤 Author
+**👤 Author**
 
 **Awais Saeed**
 
 [![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
 
-### 📄 License
+**📄 License**
 
 This project is licensed under the MIT License.
 
