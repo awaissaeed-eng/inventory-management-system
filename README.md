@@ -102,7 +102,7 @@ Fully responsive design optimized for all screen sizes with Tailwind CSS utility
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/inventory-management-system.git
+git clone https://github.com/awaissaeed-eng/inventory-management-system.git
 cd inventory-management-system
 
 # Install dependencies
@@ -130,8 +130,9 @@ npm run dev
 
 **Awais Saeed**
 
-[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/yourusername)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/yourprofile)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white)](https://github.com/awaissaeed-eng)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/awaissaeed-sethi)
+[![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:awaissaeed054@gmail.com)
 
 **📄 License**
 
