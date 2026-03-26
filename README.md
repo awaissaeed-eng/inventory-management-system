@@ -1,10 +1,15 @@
 # 🏢 IT Asset Management System (NEPRA)
 
+<<<<<<< HEAD
 A comprehensive full-stack web application developed during my internship at **NEPRA (National Electric Power Regulatory Authority)** for managing and tracking IT assets throughout their complete lifecycle - from acquisition to disposal.
+=======
+A full-stack web application developed during my internship at NEPRA for managing and tracking IT assets across their lifecycle.
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
 
 ---
 
 ## 🔧 Tech Stack
+<<<<<<< HEAD
 
 ### Frontend
 - **React** 19.1.0 - Modern UI with hooks
@@ -24,10 +29,17 @@ A comprehensive full-stack web application developed during my internship at **N
 - React Router DOM, React Icons, Lucide React
 - Flask-CORS, Werkzeug, python-dotenv
 - Git, MySQL Workbench, Postman
+=======
+- Frontend: React, Tailwind CSS
+- Backend: Python (Flask)
+- Database: MySQL
+- Other: Chart.js, Axios
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
 
 ---
 
 ## ✨ Key Features
+<<<<<<< HEAD
 
 ### 📊 Dashboard & Analytics
 - Real-time statistics with interactive pie charts
@@ -148,10 +160,19 @@ start-fast.bat
 # Terminal 2: cd frontend && npm start
 ```
 
+=======
+- Asset management (Add, Edit, Delete, Track)
+- Asset assignment to employees
+- Repair and maintenance tracking
+- Return and auction management
+- Dashboard with real-time statistics
+- PDF and Excel report export
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
 
 ---
 
 ## 💼 My Role
+<<<<<<< HEAD
 
 - **Developed the complete system** during my 2-month internship at NEPRA
 - **Built both frontend and backend** from scratch
@@ -168,6 +189,12 @@ start-fast.bat
 - **100% accuracy** in asset tracking (vs. 85% with Excel)
 - **Instant report generation** (vs. 2-3 hours manually)
 - **15+ departments** using the system daily
+=======
+- Developed the complete system during my internship
+- Built both frontend and backend
+- Designed database and implemented APIs
+- Deployed system on internal server
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
 
 ---
 
@@ -178,13 +205,22 @@ start-fast.bat
 
 ### Asset Management
 <img width="1920" height="1042" alt="Assets" src="https://github.com/user-attachments/assets/c06c3f77-a166-49da-9748-aeb6166f1336" />
+<<<<<<< HEAD
+
+### Assignment System
+<img width="1920" height="1042" alt="Assets" src="https://github.com/user-attachments/assets/e99b3b5f-eeb4-4b6f-a3da-b71b79935842" />
+=======
+
 
 ### Assignment System
 <img width="1920" height="1042" alt="Assets" src="https://github.com/user-attachments/assets/e99b3b5f-eeb4-4b6f-a3da-b71b79935842" />
 
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
+
 ### Repair Management
 <img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/48a86b24-29ad-4316-970b-9d7b5168dffa" />
 
+<<<<<<< HEAD
 ### Return 
 <img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/00d47185-ec80-4f62-8d4a-169e60537a44" />
 
@@ -294,10 +330,31 @@ nepra-asset-management/
 │
 └── README.md
 ```
+=======
+
+### Return 
+<img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/00d47185-ec80-4f62-8d4a-169e60537a44" />
+
+
+### Auction
+<img width="1920" height="1040" alt="Repair" src="https://github.com/user-attachments/assets/87d2ea1a-ab11-466e-b24b-304523c0d4fa" />
+
+
+
+### Report
+<img width="1920" height="936" alt="Reports" src="https://github.com/user-attachments/assets/33bd8647-b40e-4092-b76f-892b2f5d2e84" />
+
+---
+
+## 🌐 Project Status
+✔ Deployed and used within organization  
+✔ Handles real-world asset tracking  
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
 
 ---
 
 ## 👤 Author
+<<<<<<< HEAD
 
 **Awais Saeed**
 
@@ -322,3 +379,6 @@ nepra-asset-management/
 Made with ❤️ during my internship at NEPRA
 
 </div>
+=======
+Awais Saeed
+>>>>>>> 4aed4a350a762299cabedc2aca3d2d21e862e1fb
