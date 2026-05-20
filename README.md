@@ -20,12 +20,12 @@
 
 </div>
 
-- **Dynamic Navigation** - Smooth client-side routing with React Router and 13+ pages.
-- **Event Sections** - Organized asset categories with device types, brands, and models.
-- **Live RSVP** - Real-time asset assignment and tracking with instant updates.
-- **Interactive Map** - Dashboard with Chart.js visualization and asset distribution.
-- **Attendee Chat** - Activity logs and audit trail for all operations.
-- **Fully Responsive** - Optimized user experience on mobile, tablet, and desktop devices.
+- **Dynamic Navigation** - Smooth client-side routing with React Router and 13+ pages
+- **Event Sections** - Organized asset categories with device types, brands, and models
+- **Live RSVP** - Real-time asset assignment and tracking with instant updates
+- **Interactive Map** - Dashboard with Chart.js visualization and asset distribution
+- **Attendee Chat** - Activity logs and audit trail for all operations
+- **Fully Responsive** - Optimized user experience on mobile, tablet and desktop devices
 
 <div align="center">
 
